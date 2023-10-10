@@ -34,11 +34,23 @@
             <div class="col-2">
                 <div class="infos">
                     <h2>Information</h2>
-                    {# Add here informations about current ship position #}
+                    <p>Boat Coordinates: {{ boat.coordX }}, {{ boat.coordY }}</p>
+                    {% for y in 0..6 %}
+                        {% for x in 0..12 %}
+                            {% if boat.coordX == x and boat.coordY == y and map[x][y].type is defined %}
+                                <p>Tile Type: {{ map[x][y].type }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
                 </div>
                 <div class="navigation">
                     <h2>Navigation</h2>
-                    {# Add here N/S/E/W buttons #}
+                    <ul>
+                        <li><a href="{{ path('moveDirection', { 'direction': 'N' }) }}">Move North</a></li>
+                        <li><a href="{{ path('moveDirection', { 'direction': 'S' }) }}">Move South</a></li>
+                        <li><a href="{{ path('moveDirection', { 'direction': 'E' }) }}">Move East</a></li>
+                        <li><a href="{{ path('moveDirection', { 'direction': 'W' }) }}">Move West</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
