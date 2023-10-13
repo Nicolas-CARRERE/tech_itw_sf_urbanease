@@ -86,7 +86,7 @@ class BoatController extends AbstractController
         // Check if the boat has found the treasure
         if ($this->mapManager->checkTreasure($boat)) {
             // Display a success flash message
-            $this->addFlash('success', 'Congratulations! You found the treasure.');
+            $this->addFlash('custom-success', 'Congratulations! You found the treasure.');
         }
 
         // Redirect back to the map
