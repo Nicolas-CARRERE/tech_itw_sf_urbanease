@@ -51,6 +51,9 @@
         "sort-packages": true,
         "allow-plugins": {
             "symfony/flex": true
+        },
+        "platform": {
+            "php": "8.0.0"
         }
     },
     "autoload": {
@@ -90,6 +93,12 @@
         "symfony": {
             "allow-contrib": false,
             "require": "4.4.*"
+        }
+    },
+    "repositories": {
+        "symfony": {
+            "type": "composer",
+            "url": "https://composer.symfony.com"
         }
     }
 }

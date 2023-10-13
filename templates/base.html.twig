@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     {% block stylesheets %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 </head>
 <body>
     <header>
@@ -22,25 +23,31 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="{{ path('homepage') }}">Instructions</a>
                     <a class="nav-item nav-link" href="{{ path('map') }}">Map</a>
-                    <a class="nav-item nav-link" href="#">Start</a>
+                    <a class="nav-item nav-link" href="{{ path('start') }}">Start</a>
                 </div>
             </div>
         </nav>
     </header>
 
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    {% if label == 'custom-success' %}
+                        <div class="alert alert-custom-success">
+                            {{ message }}
+                        </div>
+                    {% else %}
                         <div class="alert alert-{{ label }}">
                             {{ message }}
                         </div>
-                    {% endfor %}
+                    {% endif %}
                 {% endfor %}
-            </div>
+            {% endfor %}
         </div>
     </div>
+</div>
 
     {% block body %}{% endblock %}
     <!-- Latest compiled and minified CSS & JS -->
