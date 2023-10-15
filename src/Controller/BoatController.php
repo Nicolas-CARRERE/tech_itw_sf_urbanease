@@ -119,24 +119,24 @@ class BoatController extends AbstractController
     public function moveDirection(string $direction, MapManager $mapManager,BoatRepository
     $boatRepository, EntityManagerInterface $em,SessionInterface $session) :Response
     {
+        /*Direction boat*/
         $boat = $boatRepository->findOneBy([]);
+        $x = $boat->getCoordX();
+        $y = $boat->getCoordY();
+
         if ($direction === 'N') {
-            $boat->setCoordY($boat->getCoordY() - 1);
+            $boat->setCoordY($y - 1);
         }elseif ($direction === 'S'){
-            $boat->setCoordY($boat->getCoordY() + 1);
+            $boat->setCoordY($y + 1);
         }elseif ($direction === 'E'){
-            $boat->setCoordX($boat->getCoordX() + 1);
+            $boat->setCoordX($x + 1);
         }elseif ($direction === 'W'){
-            $boat->setCoordX($boat->getCoordX() - 1);
+            $boat->setCoordX($x - 1);
         }else{
             throw $this->createNotFoundException();
         }
 
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
-        $x = $boat->getCoordX();
-        $y = $boat->getCoordY();
-
+        /*Service tileExists*/
         $exists = $mapManager->tileExists($boatRepository);
         if ($exists) {
             $message = 'La tuile existe.';
@@ -146,9 +146,24 @@ class BoatController extends AbstractController
             $type = 'danger';
         }
 
+        /*Limited boat in the map*/
+        if($x < 0 ){
+            $boat->setCoordX(0);
+        }
+        if($x > 12 ){
+            $boat->setCoordX(12);
+        }
+        if($y < 0 ){
+            $boat->setCoordY(0);
+        }
+        if($y > 6 ){
+            $boat->setCoordY(6);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
         $session->getFlashBag()->add($type, $message);
-
-
-        return $this->redirectToRoute('map');
+         return $this->redirectToRoute('map');
     }
 }

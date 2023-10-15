@@ -17,9 +17,14 @@ class MapController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $tiles = $em->getRepository(Tile::class)->findAll();
-
+        $tileType = null;
+        $boat = $boatRepository->findOneBy([], ['id' => 'ASC']  );
         foreach ($tiles as $tile) {
             $map[$tile->getCoordX()][$tile->getCoordY()] = $tile;
+            if ($tile->getCoordX() == $boat->getCoordX() && $tile->getCoordY() == $boat->getCoordY()) {
+                $tileType = $tile->getType();
+
+            }
         }
 
         $boat = $boatRepository->findOneBy([]);
@@ -27,6 +32,7 @@ class MapController extends AbstractController
         return $this->render('map/index.html.twig', [
             'map'  => $map ?? [],
             'boat' => $boat,
+            'tileType' => $tileType,
         ]);
     }
 }
