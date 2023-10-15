@@ -48,6 +48,12 @@
                         {%  elseif  tileType == "island" %}
                             <li>Vous êtes sur une île</li>
                         {% endif %}
+                        <li class="mt-2"><strong>Le black Pearl va-t-il trouver un trésor :</strong></li>
+                        {% if findTreasure == true %}
+                            <li>Oui ! Trésor trouvé !</li>
+                        {% else %}
+                            <li>Pas encore...</li>
+                        {% endif %}
                     </ul>
                 </div>
                 <div class="navigation">
