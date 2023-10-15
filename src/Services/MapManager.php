@@ -2,10 +2,9 @@
 
 namespace App\Services;
 
-use App\Entity\Tile;
 use App\Repository\BoatRepository;
 use App\Repository\TileRepository;
-
+use App\Entity\Tile;
 
 class MapManager
 {
@@ -54,7 +53,8 @@ class MapManager
      * @param TileRepository $tileRepository
      * @return bool
      */
-    public function checkTreasure(BoatRepository $boatRepository, TileRepository $tileRepository): bool
+    public function checkTreasure(BoatRepository $boatRepository,
+                                  TileRepository $tileRepository): bool
     {
         $boat = $boatRepository->findOneBy([]);
         $tile = $tileRepository->findOneBy(['hasTreasure' => true]);

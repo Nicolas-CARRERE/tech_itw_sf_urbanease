@@ -62,7 +62,8 @@ class MapController extends AbstractController
     /**
      * @Route("/start", name="start")
      */
-     public function start(TileRepository $tileRepository,BoatRepository $boatRepository,
+     public function start(TileRepository $tileRepository,
+                           BoatRepository $boatRepository,
                           SessionInterface $session): Response
     {
         $em = $this->getDoctrine()->getManager();
