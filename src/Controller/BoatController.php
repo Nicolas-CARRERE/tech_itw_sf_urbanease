@@ -18,12 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BoatController extends AbstractController
 {
-    public const DIRECTIONS = [
-        'N' => [0, -1],
-        'S' => [0, 1],
-        'E' => [1, 0],
-        'W' => [-1, 0],
-    ];
     /**
      * Move the boat to coord x,y
      * @Route("/move/{x}/{y}", name="moveBoat", requirements={"x"="\d+", "y"="\d+"}))
@@ -114,6 +108,7 @@ class BoatController extends AbstractController
     }
 
     /**
+     * Move boat 4 directions N,S,E,W
      * @Route("/direction/{direction}", name="direction")
      */
     public function moveDirection(string $direction, MapManager $mapManager,BoatRepository
@@ -147,16 +142,16 @@ class BoatController extends AbstractController
         }
 
         /*Limited boat in the map*/
-        if($x < 0 ){
+        if($boat->getCoordX() < 0 ){
             $boat->setCoordX(0);
         }
-        if($x > 12 ){
+        if($boat->getCoordX() > 12 ){
             $boat->setCoordX(12);
         }
-        if($y < 0 ){
+        if($boat->getCoordY() < 0 ){
             $boat->setCoordY(0);
         }
-        if($y > 6 ){
+        if($boat->getCoordY() > 6 ){
             $boat->setCoordY(6);
         }
 

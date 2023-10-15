@@ -23,6 +23,7 @@ class MapController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $tiles = $em->getRepository(Tile::class)->findAll();
 
+        /*create session for randIsland and update database tile->hasTreasure*/
         if (!$session->has('randomIsland')) {
             $randomIsland = $mapManager->getRandomIsland($tileRepository);
             $session->set('randomIsland', [
@@ -36,7 +37,7 @@ class MapController extends AbstractController
 
         }
 
-
+        /*check what type of boat is on*/
         $tiles = $em->getRepository(Tile::class)->findAll();
         $tileType = null;
         $boat = $boatRepository->findOneBy([], ['id' => 'ASC']  );
@@ -47,13 +48,14 @@ class MapController extends AbstractController
 
             }
         }
-
-        $boat = $boatRepository->findOneBy([]);
+        /*check if the boat is on the treasure*/
+        $findTreasure = $mapManager->checkTreasure($boatRepository, $tileRepository);
 
         return $this->render('map/index.html.twig', [
             'map'  => $map ?? [],
             'boat' => $boat,
             'tileType' => $tileType,
+            'findTreasure' => $findTreasure
         ]);
     }
 
