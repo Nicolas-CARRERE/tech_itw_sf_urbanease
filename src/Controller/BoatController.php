@@ -16,7 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BoatController extends AbstractController
 {
-
+    public const DIRECTIONS = [
+        'N' => [0, -1],
+        'S' => [0, 1],
+        'E' => [1, 0],
+        'W' => [-1, 0],
+    ];
     /**
      * Move the boat to coord x,y
      * @Route("/move/{x}/{y}", name="moveBoat", requirements={"x"="\d+", "y"="\d+"}))
@@ -104,5 +109,31 @@ class BoatController extends AbstractController
         }
 
         return $this->redirectToRoute('boat_index');
+    }
+
+    /**
+     * @Route("/direction/{direction}", name="direction")
+     */
+    public function moveDirection(string $direction, BoatRepository $boatRepository, EntityManagerInterface $em) :Response
+    {
+        $boat = $boatRepository->findOneBy([]);
+        if ($direction === 'N') {
+            $boat->setCoordY($boat->getCoordY() - 1);
+        }elseif ($direction === 'S'){
+            $boat->setCoordY($boat->getCoordY() + 1);
+        }elseif ($direction === 'E'){
+            $boat->setCoordX($boat->getCoordX() + 1);
+        }elseif ($direction === 'W'){
+            $boat->setCoordX($boat->getCoordX() - 1);
+        }else{
+            throw $this->createNotFoundException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        $x = $boat->getCoordX();
+        $y = $boat->getCoordY();
+
+        return $this->redirectToRoute('map');
     }
 }
