@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Boat;
 use App\Form\BoatType;
 use App\Repository\BoatRepository;
+use App\Services\MapManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -114,7 +116,8 @@ class BoatController extends AbstractController
     /**
      * @Route("/direction/{direction}", name="direction")
      */
-    public function moveDirection(string $direction, BoatRepository $boatRepository, EntityManagerInterface $em) :Response
+    public function moveDirection(string $direction, MapManager $mapManager,BoatRepository
+    $boatRepository, EntityManagerInterface $em,SessionInterface $session) :Response
     {
         $boat = $boatRepository->findOneBy([]);
         if ($direction === 'N') {
@@ -133,6 +136,18 @@ class BoatController extends AbstractController
         $em->flush();
         $x = $boat->getCoordX();
         $y = $boat->getCoordY();
+
+        $exists = $mapManager->tileExists($boatRepository);
+        if ($exists) {
+            $message = 'La tuile existe.';
+            $type = 'info';
+        } else {
+            $message = 'La tuile n\'existe pas.';
+            $type = 'danger';
+        }
+
+        $session->getFlashBag()->add($type, $message);
+
 
         return $this->redirectToRoute('map');
     }
