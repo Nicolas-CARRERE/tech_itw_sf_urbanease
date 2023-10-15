@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use App\Entity\Tile;
 use App\Repository\BoatRepository;
+use App\Repository\TileRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class MapManager
 {
@@ -17,5 +20,20 @@ class MapManager
         }
 
         return true;
+    }
+
+    public function getRandomIsland(TileRepository $tileRepository): ?Tile
+    {
+        $tiles = $tileRepository->findBy(['type' => 'island']);
+
+        if (!$tiles) {
+            return null;
+        }
+
+        $randomTile = $tiles[array_rand($tiles)];
+
+
+
+        return $randomTile;
     }
 }
