@@ -111,8 +111,11 @@ class BoatController extends AbstractController
      * Move boat 4 directions N,S,E,W
      * @Route("/direction/{direction}", name="direction")
      */
-    public function moveDirection(string $direction, MapManager $mapManager,BoatRepository
-    $boatRepository, EntityManagerInterface $em,SessionInterface $session) :Response
+    public function moveDirection(string $direction,
+                                  MapManager $mapManager,
+                                  BoatRepository $boatRepository,
+                                  EntityManagerInterface $em,
+                                  SessionInterface $session) :Response
     {
         /*Direction boat*/
         $boat = $boatRepository->findOneBy([]);

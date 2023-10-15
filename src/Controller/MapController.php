@@ -62,9 +62,9 @@ class MapController extends AbstractController
     /**
      * @Route("/start", name="start")
      */
-      public function start(TileRepository $tileRepository,BoatRepository $boatRepository,
-                          SessionInterface $session):
-    Response
+     public function start(TileRepository $tileRepository,
+                           BoatRepository $boatRepository,
+                          SessionInterface $session): Response
     {
         $em = $this->getDoctrine()->getManager();
         $boat = $boatRepository->findOneBy([]);
@@ -80,6 +80,7 @@ class MapController extends AbstractController
         }
 
         $session->remove('randomIsland');
+
         return $this->redirectToRoute('map');
 
     }
