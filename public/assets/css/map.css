@@ -154,3 +154,8 @@ h2 {
 .itw-navigation li:hover a {
     color: white;
 }
+
+/*error 404*/
+.itw-error{width:100%;text-align: center; color: white; font-size: 2em; margin-top: 1em;}
+.itw-error a{color: white; text-decoration: none;}
+.itw-error a:hover{color: #A35F22;}
