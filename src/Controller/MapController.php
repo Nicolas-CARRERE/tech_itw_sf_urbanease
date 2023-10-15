@@ -22,7 +22,7 @@ class MapController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
         $tiles = $em->getRepository(Tile::class)->findAll();
-        $randomIsland = null;
+
         if (!$session->has('randomIsland')) {
             $randomIsland = $mapManager->getRandomIsland($tileRepository);
             $session->set('randomIsland', [
@@ -56,4 +56,30 @@ class MapController extends AbstractController
             'tileType' => $tileType,
         ]);
     }
+
+    /**
+     * @Route("/start", name="start")
+     */
+      public function start(TileRepository $tileRepository,BoatRepository $boatRepository,
+                          SessionInterface $session):
+    Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $boat = $boatRepository->findOneBy([]);
+        $boat->setCoordX(0);
+        $boat->setCoordY(0);
+        $em->persist($boat);
+        $em->flush();
+        $tiles= $tileRepository->findBy(['hasTreasure' => true]);
+        foreach ($tiles as $tile) {
+            $tile->setHasTreasure(false);
+            $em->persist($tile);
+            $em->flush();
+        }
+
+        $session->remove('randomIsland');
+        return $this->redirectToRoute('map');
+
+    }
+
 }
