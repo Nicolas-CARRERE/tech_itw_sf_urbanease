@@ -22,7 +22,7 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="{{ path('homepage') }}">Instructions</a>
                     <a class="nav-item nav-link" href="{{ path('map') }}">Map</a>
-                    <a class="nav-item nav-link" href="#">Start</a>
+                    <a class="nav-item nav-link" href="{{ path('start') }}">Start</a>
                 </div>
             </div>
         </nav>
@@ -33,7 +33,7 @@
             <div class="col-sm-12">
                 {% for label, messages in app.flashes %}
                     {% for message in messages %}
-                        <div class="alert alert-{{ label }}">
+                        <div class="alert alert-{{ label }} itw-info">
                             {{ message }}
                         </div>
                     {% endfor %}

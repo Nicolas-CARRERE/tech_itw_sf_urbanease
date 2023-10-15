@@ -7,9 +7,11 @@
 {% block body %}
     <div class="container-fluid">
         <h1>Map</h1>
+
         <div class="row">
             <div class="col-10">
                 <div class="map">
+
                     {% if map is empty %}
                         <div class="alert alert-warning">You are still on the firm ground, you have to load fixtures first !</div>
                     {% endif %}
@@ -34,11 +36,44 @@
             <div class="col-2">
                 <div class="infos">
                     <h2>Information</h2>
-                    {# Add here informations about current ship position #}
+                    <ul class="itw-infos-blackPearl">
+                        <li class="mt-2"><strong>Le Black Perl :</strong></li>
+                        <li>Axe X à {{ boat.coordX }}</li>
+                        <li>Axe Y à {{ boat.coordY }}</li>
+                        <li class="mt-2"><strong>il se trouve sur :</strong></li>
+                        {%  if tileType == "sea" %}
+                            <li>Vous êtes sur la mer</li>
+                        {%   elseif tileType == "port" %}
+                            <li>Vous êtes au Port</li>
+                        {%  elseif  tileType == "island" %}
+                            <li>Vous êtes sur une île</li>
+                        {% endif %}
+                        <li class="mt-2"><strong>Le black Pearl va-t-il trouver un trésor :</strong></li>
+                        {% if findTreasure == true %}
+                            <li>Oui ! Trésor trouvé !</li>
+                        {% else %}
+                            <li>Pas encore...</li>
+                        {% endif %}
+                    </ul>
                 </div>
                 <div class="navigation">
                     <h2>Navigation</h2>
-                    {# Add here N/S/E/W buttons #}
+                    <ul class="itw-navigation">
+                        <li class="itw-nord">
+                            <a href="{{ path("direction", { direction: 'N' }) }}">N</a>
+                        </li>
+                        <div>
+                           <li class="itw-west">
+                                <a href="{{ path("direction", { direction: 'W' }) }}">O</a>
+                            </li>
+                            <li class="itw-est">
+                                <a href="{{ path("direction", { direction: 'E' }) }}">E</a>
+                            </li>
+                        </div>
+                        <li class="itw-sud">
+                            <a href="{{ path("direction", { direction: 'S' }) }}">S</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

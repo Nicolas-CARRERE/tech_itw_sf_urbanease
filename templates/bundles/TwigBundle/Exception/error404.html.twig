@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <h1 class="text-center my-5">Error 404</h1>
+    <h2 class="text-center my-3">Page not found</h2>
+    <p class="itw-error text-light text-center h6 my-5">
+        The direction isn't existe <a class="text-warning" href="{{ path('map') }}">return on the map</a>.
+    </p>
+{% endblock %}
